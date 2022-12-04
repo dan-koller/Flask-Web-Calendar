@@ -10,6 +10,9 @@ app = Flask(__name__)
 api = Api(app)
 parser = reqparse.RequestParser()
 
+# Global variables
+EVENT_NON_EXISTENT = "The event doesn't exist!"
+
 # Initialize the database connection
 db = SQLAlchemy(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -72,7 +75,7 @@ class EventResource(Resource):
             events = Event.query.filter(Event.date >= start_time). \
                 filter(Event.date <= end_time).all()
             if len(events) < 1:
-                abort(404, {"message": "The event doesn't exist!"})
+                abort(404, {"message": EVENT_NON_EXISTENT})
             return events
         return Event.query.all()
 
@@ -90,7 +93,7 @@ class EventByIdResource(Resource):
     def get(self, id):
         event = Event.query.filter(Event.id == id).first()
         if not event:
-            abort(404, "The event doesn't exist!")
+            abort(404, EVENT_NON_EXISTENT)
         return event, 200
 
     def put(self, id):
@@ -98,7 +101,7 @@ class EventByIdResource(Resource):
         event = Event.query.filter(Event.id == id).first()
 
         if not event:
-            abort(404, "The event doesn't exist!")
+            abort(404, EVENT_NON_EXISTENT)
 
         event.event = f"{args['event']}"
         event.date = args['date'].date()
@@ -109,7 +112,7 @@ class EventByIdResource(Resource):
     def delete(self, id):
         event = Event.query.filter(Event.id == id).first()
         if not event:
-            abort(404, "The event doesn't exist!")
+            abort(404, EVENT_NON_EXISTENT)
         Event.query.filter_by(id=id).delete()
         db.session.commit()
         return {"message": "The event has been deleted!"}, 204
