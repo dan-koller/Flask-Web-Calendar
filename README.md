@@ -16,23 +16,25 @@ Afraid to miss something interesting? Don't worry, you won't! This app provides 
 git clone https://github.com/dan-koller/Flask-Web-Calendar
 ```
 
-2. Create a virtual environment
+2. Create a virtual environment\*
 
 ```bash
 python3 -m venv venv
 ```
 
-3. Install the requirements
+3. Install the requirements\*
 
 ```bash
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
-4. Run the app
+4. Run the app\*
 
 ```bash
 python3 app.py
 ```
+
+_\*) You might need to use `python` and `pip` instead of `python3` and `pip3` depending on your system._
 
 ## Usage
 
